@@ -1,0 +1,10 @@
+version: "2.0"
+
+stories:
+  - story: responde duvidas
+    steps:
+    - intent: objetivos
+    - action: action_objetivos
+    - action: action_limpa_slots
+
+  

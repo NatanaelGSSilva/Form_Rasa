@@ -1,0 +1,57 @@
+version: "2.0"
+
+nlu:
+- intent: saudacao
+  examples: |
+    - [oi](cumprimento) 
+    - [oi](cumprimento), eu sou o Ygor
+    - [olá](cumprimento), eu sou o Daniel
+    - [como vai](cumprimento)
+    - [eaí](cumprimento) Bruno
+    - [salve](cumprimento) Matheus
+    - Me chamo João da Silva
+    - Renato Russo, [muito prazer](cumprimento)
+    - Meu nome é Maria Silvina
+
+- intent: escolha
+  examples: |
+    - vê aí uma [camisa](tiprod) [m](titam)
+    - quero uma [calça](tiprod) [g](titam)
+    - por gentileza, uma [bermuda](tiprod) [p](titam)
+    - duas [camisas](tiprod) tamanho [g](titam)
+    - três [calças](tiprod) tamanho [p](titam)
+    - quatro [bermudas](tiprod) tamanho [m](titam)
+    - vê aí uma [camisa](tiprod) [m](titam)
+    - quero uma [calça](tiprod) [g](titam)
+    - por gentileza, uma [bermuda](tiprod) [p](titam)
+    - cinco [camisas](tiprod) tamanho [g](titam)
+    - seis [calças](tiprod) tamanho [p](titam)
+    - duas [bermudas](tiprod) tamanho [m](titam)
+    - vê aí três [camisas](tiprod) [p](titam)
+    - quero quatro [calças](tiprod) [m](titam)
+    - por favor, duas [bermudas](tiprod) [g](titam)
+    - vê aí uma [camisa](tiprod) [m](titam)
+    - quero uma [calça](tiprod) [g](titam)
+    - por gentileza, uma [bermuda](tiprod) [p](titam)
+    - duas [camisas](tiprod) tamanho [g](titam)
+    - três [calças](tiprod) tamanho [p](titam)
+    - quatro [bermudas](tiprod) tamanho [m](titam)
+    - vê aí uma [camisa](tiprod) [m](titam)
+    - quero uma [calça](tiprod) [g](titam)
+    - por gentileza, uma [bermuda](tiprod) [p](titam)
+    - cinco [camisas](tiprod) tamanho [g](titam)
+    - seis [calças](tiprod) tamanho [p](titam)
+    - duas [bermudas](tiprod) tamanho [m](titam)
+    - vê aí três [camisas](tiprod) [p](titam)
+    - quero quatro [calças](tiprod) [m](titam)
+    - por favor, duas [bermudas](tiprod) [g](titam)
+
+- intent: objetivos
+  examples: |
+    - para que serve
+    - quais as opções de moedas
+    - quais as moedas
+    - com quais moedas voceês trabalham
+    - que você faz
+    - qual é a desse bot
+    - o que tem aqui

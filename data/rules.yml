@@ -1,0 +1,27 @@
+version: "2.0"
+
+rules:
+- rule: ois
+  conversation_start: true
+  steps:
+  - intent: saudacao
+  - action: action_ola
+
+- rule: ativa o formulario e envia
+  steps:
+  - intent : escolha
+  - action: escolha_form
+  - active_loop: escolha_form
+
+- rule: desativa escolha_form
+  condition:
+  - active_loop: escolha_form
+  steps:
+  - action: escolha_form
+  - active_loop: null
+  - slot_was_set:
+    - requested_slot: null
+  - action: resposta_escolha_form
+  - action: action_limpa_slots
+
+

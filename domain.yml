@@ -1,0 +1,63 @@
+version: "2.0"
+
+######### INTENÇÕES
+intents:
+ - saudacao
+ - escolha:
+    use_entities:
+      - tiprod
+      - titam
+      - number
+    ignore_entities:
+      - cumprimento
+ - objetivos
+
+######### ENTITIES
+entities:
+  - tiprod
+  - titam
+  - number
+  - cumprimento
+
+######### SLOTS
+slots:
+  produto:
+    type: text
+    influence_conversation: true
+  tamanho:
+    type: text
+    influence_conversation: true
+  quantidade:
+    type: text
+    influence_conversation: true
+
+########## FORMS
+forms:
+  escolha_form:
+    produto:
+    - type: from_entity
+      entity: tiprod
+    tamanho:
+    - type: from_entity
+      entity: titam
+    quantidade:
+    - type: from_entity
+      entity: number        
+
+########## ACTIONS
+actions:
+  - action_ola
+  - action_ask_produto
+  - action_ask_quantidade
+  - action_ask_tamanho
+  - action_objetivos
+  - action_opcao_estranha_produto
+  - action_opcao_estranha_tamanho
+  - action_opcao_estranha_quantia
+  - validate_escolha_form
+  - action_limpa_slots
+  - resposta_escolha_form
+
+session_config:
+  session_expiration_time: 60
+  carry_over_slots_to_new_session: true
