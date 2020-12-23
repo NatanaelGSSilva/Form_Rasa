@@ -9,7 +9,7 @@ from typing import Any, Text, Dict, List
 
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
-from rasa_sdk_events import SlotSet, UserUtteranceReverted
+from rasa_sdk.events import SlotSet, UserUtteranceReverted
 from rasa_sdk.types import DomainDict
 
 class ValidaEscolhaForm(FormValidationAction):
@@ -26,7 +26,7 @@ class ValidaEscolhaForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         """Valida a Opção do Produto"""
 
-        op - slot_value.lower()
+        op = slot_value.lower()
         if op == "camisa" or op == "calça" or op == "bermuda" or \
             op == "camisas" or op == "calças" or op == "bermudas":
             return {"produto": op}
@@ -43,7 +43,7 @@ class ValidaEscolhaForm(FormValidationAction):
     ) -> Dict[Text, Any]:
         """Valida o tamanho do Produto"""
 
-        op - slot_value.lower()
+        op = slot_value.lower()
         if op == "p" or op == "m" or op == "g":
             return {"tamanho": op}
         else:
@@ -78,9 +78,9 @@ class ActionOla(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Ola! Qual produto vai hoje']
+            text = ['Ola! Qual produto vai hoje']
             for texto in text:
-                dispatcher.utter_message(text=text)
+                dispatcher.utter_message(text=texto)
             return []
 
 class ActionAskProduto(Action):
@@ -91,10 +91,23 @@ class ActionAskProduto(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Temos camisas, calças e bermudas. qual vai?']
+            text = ['Temos camisas, calças e bermudas. qual vai?']
             for texto in text:
-                dispatcher.utter_message(text=text)
+                dispatcher.utter_message(texto)
             return []
+
+class ActionAskTamanho(Action):
+
+    def name(self) -> Text:
+        return "action_ask_tamanho"
+
+    def run(self, dispatcher: CollectingDispatcher,
+            tracker: Tracker,
+            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
+            text = ['Qual o tamanho']
+            for texto in text:
+                dispatcher.utter_message(texto)
+            return []    
 
 class ActionAskQuantidade(Action):
 
@@ -104,23 +117,11 @@ class ActionAskQuantidade(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Quantas Peças']
+            text = ['Quantas Peças']
             for texto in text:
-                dispatcher.utter_message(text=text)
+                dispatcher.utter_message(texto)
             return []
 
-class ActionAskQuantidade(Action):
-
-    def name(self) -> Text:
-        return "action_ask_tamanho"
-
-    def run(self, dispatcher: CollectingDispatcher,
-            tracker: Tracker,
-            domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Quantas Peças']
-            for texto in text:
-                dispatcher.utter_message(text=text)
-            return []
 
 class ActionObjetivos(Action):
 
@@ -130,9 +131,9 @@ class ActionObjetivos(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Eu sou um bot que atende seus desejos','Qual produto vai hoje']
+            text = ['Eu sou um bot que atende seus desejos','Qual produto vai hoje']
             for texto in text:
-                dispatcher.utter_message(text=text)
+                dispatcher.utter_message(texto)
             return []
 
 class ActionOpcaoEstranhaProduto(Action):
@@ -143,9 +144,9 @@ class ActionOpcaoEstranhaProduto(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Parece que não tenho esse produto','Temos camisas, calças e bermudas']
+            text = ['Parece que não tenho esse produto','Temos camisas, calças e bermudas']
             for texto in text:
-                dispatcher.utter_message(text=text)
+                dispatcher.utter_message(texto)
             return []
 
 class ActionOpcaoEstranhaTamanho(Action):
@@ -156,9 +157,9 @@ class ActionOpcaoEstranhaTamanho(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Preciso do tamanho da peça: p, m ou g. ']
+            text = ['Preciso do tamanho da peça: p, m ou g. ']
             for texto in text:
-                dispatcher.utter_message(text=text)
+                dispatcher.utter_message(texto)
             return []
 
 class ActionOpcaoEstranhaQuantia(Action):
@@ -169,9 +170,9 @@ class ActionOpcaoEstranhaQuantia(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text:['Quantas Peças']
+            text = ['Quantas Peças']
             for texto in text:
-                dispatcher.utter_message(text=text)
+                dispatcher.utter_message(texto)
             return []
 
 class ActionRespostaForm(Action):
@@ -187,7 +188,8 @@ class ActionRespostaForm(Action):
             qtd = tracker.get_slot("quantidade")
             qtdFinal = str(qtd)
             texto = f'Foi escolhido {qtdFinal} peças de {tipo_produto} tamanho {tipo_tamanho}. Mais algum produto?'
-            dispatcher.utter_message(text=texto)       
+            dispatcher.utter_message(texto)
+            return []       
 
 class ActionLimpaSlots(Action):
     ##### Nome de actions para o rasa
