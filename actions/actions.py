@@ -31,7 +31,6 @@ class ValidaEscolhaForm(FormValidationAction):
             op == "camisas" or op == "calças" or op == "bermudas":
             return {"produto": op}
         else:
-            dispatcher.utter_message(FollowupAction("action_opcao_estranha_produto"))
             return {"produto": None}
 
     def validate_tamanho(
@@ -47,27 +46,27 @@ class ValidaEscolhaForm(FormValidationAction):
         if op == "p" or op == "m" or op == "g":
             return {"tamanho": op}
         else:
-            dispatcher.utter_message(FollowupAction("action_opcao_estranha_tamanho"))
             return {"tamanho": None}
 
+##### Validação da quantidade
     def validate_quantidade(
-        self,
-        slot_value: Any,
+            self,
+        slot_value: Text,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        """Valida a Quantidade do Produto"""
+        """Valida valor."""
         try:
-            all_entities = tracker.latest_message.get("entities",[])
-            entities = [e for e in all_entities if e.get("entity") == "number"]
+            all_entities = tracker.latest_message.get("entities", [])
+            entities = [e for e in all_entities if (e.get("entity") == "number")]
             entity = entities[0]
             quantia = entity.get("additional_info", {}).get("value")
             if not quantia:
                 raise (TypeError)
-        except(TypeError,AttributeError):
-            dispatcher.utter_message(FollowupAction("action_opcao_estranha_tamanho"))
+        except (TypeError, AttributeError):
             return {"quantidade": None}
+
         return {"quantidade": quantia}
 
 class ActionOla(Action):
