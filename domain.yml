@@ -30,7 +30,10 @@ slots:
   quantidade:
     type: text
     influence_conversation: true
-
+  senderid:
+    type: text
+    influence_conversation: false
+  
 ########## FORMS
 forms:
   escolha_form:

@@ -7,4 +7,39 @@ stories:
     - action: action_objetivos
     - action: action_limpa_slots
 
-  
+  - story: armazena_valor_produto
+    steps:
+    - intent: escolha
+    - action: escolha_form
+    - active_loop: escolha_form
+    - slot_was_set: 
+        - produto: camisas 
+
+  - story: armazena_valor_tamanho
+    steps:
+    - intent: escolha
+    - action: escolha_form
+    - active_loop: escolha_form
+    - slot_was_set: 
+        - tamanho: m
+
+  - story: armazena_valor_quantidade
+    steps:
+    - intent: escolha
+    - action: escolha_form
+    - active_loop: escolha_form
+    - slot_was_set: 
+        - quantidade: 2
+
+  - story: interactive_story_1
+    steps:
+    - intent: saudacao
+      entities:
+      - cumprimento: ola
+    - action: action_ola
+    - slot_was_set:
+      - senderid: 40cf24a08f6e448db635ce555cd7d1e6
+    - intent: saudacao
+      entities:
+      - cumprimento: ola
+    - action: action_ola

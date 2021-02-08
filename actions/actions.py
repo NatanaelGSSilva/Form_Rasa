@@ -10,6 +10,7 @@ from typing import Any, Text, Dict, List
 from rasa_sdk import Action, Tracker, FormValidationAction
 from rasa_sdk.executor import CollectingDispatcher
 from rasa_sdk.events import SlotSet, UserUtteranceReverted
+from rasa_sdk.events import FollowupAction
 from rasa_sdk.types import DomainDict
 
 class ValidaEscolhaForm(FormValidationAction):
@@ -27,22 +28,24 @@ class ValidaEscolhaForm(FormValidationAction):
         """Valida a Opção do Produto"""
 
         op = slot_value.lower()
+        print(op)
         if op == "camisa" or op == "calça" or op == "bermuda" or \
             op == "camisas" or op == "calças" or op == "bermudas":
             return {"produto": op}
         else:
             return {"produto": None}
 
+   ##### Validação de tamanho
     def validate_tamanho(
         self,
-        slot_value: Any,
+        slot_value: Text,
         dispatcher: CollectingDispatcher,
         tracker: Tracker,
         domain: DomainDict,
     ) -> Dict[Text, Any]:
-        """Valida o tamanho do Produto"""
-
+        """Valida opção de quantidade."""
         op = slot_value.lower()
+        print(op)
         if op == "p" or op == "m" or op == "g":
             return {"tamanho": op}
         else:
@@ -62,6 +65,7 @@ class ValidaEscolhaForm(FormValidationAction):
             entities = [e for e in all_entities if (e.get("entity") == "number")]
             entity = entities[0]
             quantia = entity.get("additional_info", {}).get("value")
+            print(quantia)
             if not quantia:
                 raise (TypeError)
         except (TypeError, AttributeError):
@@ -77,10 +81,14 @@ class ActionOla(Action):
     def run(self, dispatcher: CollectingDispatcher,
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
-            text = ['Ola! Qual produto vai hoje']
-            for texto in text:
-                dispatcher.utter_message(text=texto)
-            return []
+                if tracker.get_slot('senderid') is None:
+                    text = ['Ola! Qual produto vai hoje']
+                    for texto in text:
+                        dispatcher.utter_message(text=texto)
+                    return [SlotSet('senderid', tracker.sender_id)]
+                else:
+                    dispatcher.utter_message('Olá Novamente, que produto vai hoje')
+                return []
 
 class ActionAskProduto(Action):
 
@@ -183,7 +191,7 @@ class ActionRespostaForm(Action):
             tracker: Tracker,
             domain: Dict[Text, Any]) -> List[Dict[Text, Any]]:
             tipo_produto = tracker.get_slot("produto")
-            tipo_tamanho = tracker.get_slot("quantidade")
+            tipo_tamanho = tracker.get_slot("tamanho")
             qtd = tracker.get_slot("quantidade")
             qtdFinal = str(qtd)
             texto = f'Foi escolhido {qtdFinal} peças de {tipo_produto} tamanho {tipo_tamanho}. Mais algum produto?'
